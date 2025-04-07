@@ -4,8 +4,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  User? get currentUser => _auth.currentUser;
+
   bool _isValidEmail(String email) {
     return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
+  
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      if (!_isValidEmail(email)) throw 'Invalid email format';
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw _authError(e.code);
+    }
   }
 
   Future<void> sendEmailVerification() async {
@@ -26,7 +38,7 @@ class AuthService {
         email: email,
         password: password,
       );
-      await sendEmailVerification(); // Auto-send verification email
+      await sendEmailVerification();
       return cred.user;
     } on FirebaseAuthException catch (e) {
       throw _authError(e.code);
@@ -69,6 +81,7 @@ class AuthService {
       case 'user-not-found': return 'No user found';
       case 'wrong-password': return 'Incorrect password';
       case 'email-already-in-use': return 'Email already registered';
+      case 'user-disabled': return 'Account disabled';
       default: return 'Login failed';
     }
   }

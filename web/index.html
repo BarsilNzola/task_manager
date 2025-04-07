@@ -31,8 +31,19 @@
 
   <title>task_manager</title>
   <link rel="manifest" href="manifest.json">
+  <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore-compat.js"></script>
+  <script src="main.dart.js" type="application/javascript"></script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Use CanvasKit for better performance
+    window.addEventListener('load', function() {
+      flutterWebRenderer = "canvaskit";
+    });
+  </script>
+  <div id="loading">Loading...</div>
 </body>
 </html>

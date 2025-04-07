@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart'; // For DateFormat
 import '../services/task_service.dart';
 
 class TaskListItem extends StatelessWidget {
